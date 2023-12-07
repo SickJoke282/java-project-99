@@ -13,9 +13,4 @@ public class AppApplication {
     public static void main(String[] args) {
         SpringApplication.run(AppApplication.class, args);
     }
-    @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    String welcome() {
-        return "Welcome to Spring!";
-    }
 }
