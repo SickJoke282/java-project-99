@@ -1,4 +1,4 @@
-package hexlet.code.app.Controller;
+package hexlet.code.app.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
