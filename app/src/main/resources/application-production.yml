@@ -1,0 +1,3 @@
+spring:
+  datasource:
+    url: postgres://postgresql_database_dxq8_user:mjs2SLg9wqKE5r5jXI8yiYHmwl9UPYvt@dpg-ckmk798710pc73d2mb60-a.frankfurt-postgres.render.com/postgresql_database_dxq8
