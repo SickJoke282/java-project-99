@@ -1,4 +1,47 @@
 package hexlet.code.app.service;
 
-public class UserSevice {
+import hexlet.code.app.dto.UserCreateDTO;
+import hexlet.code.app.dto.UserDTO;
+import hexlet.code.app.dto.UserUpdateDTO;
+import hexlet.code.app.exception.ResourceNotFoundException;
+import hexlet.code.app.mapper.UserMapper;
+import hexlet.code.app.repository.UserRepository;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class UserService {
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    UserMapper userMapper;
+    public List<UserDTO> getAll() {
+        var users = userRepository.findAll();
+        return users.stream()
+                .map(userMapper::map)
+                .toList();
+    }
+    public UserDTO create(@Valid UserCreateDTO dto) {
+        var user = userMapper.map(dto);
+        userRepository.save(user);
+        return userMapper.map(user);
+    }
+    public UserDTO findById(Long id) {
+        var user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
+        return userMapper.map(user);
+    }
+    public UserDTO update(@Valid UserUpdateDTO dto, Long id) {
+        var user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
+        userMapper.update(dto, user);
+        userRepository.save(user);
+        return userMapper.map(user);
+    }
+    public void delete(Long id) {
+        userRepository.deleteById(id);
+    }
 }
