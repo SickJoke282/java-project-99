@@ -19,6 +19,7 @@ public class DataInitializer implements ApplicationRunner {
     private CustomUserDetailsService userService;
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        userRepository.deleteAll();
         var email = "hexlet@example.com";
         var userData = new User();
         userData.setEmail(email);
