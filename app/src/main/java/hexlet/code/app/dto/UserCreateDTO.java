@@ -14,7 +14,6 @@ public class UserCreateDTO {
     @Email
     @NotBlank
     private String email;
-    @NotBlank
     @Size(min = 3)
-    private String passwordDigest;
+    private String password;
 }
