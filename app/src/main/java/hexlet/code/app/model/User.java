@@ -3,10 +3,11 @@ package hexlet.code.app.model;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -33,10 +34,10 @@ public class User implements BaseEntity, UserDetails {
     private long id;
     private String firstName;
     private String lastName;
+    @Column(unique = true)
     @Email
     @NotBlank
     private String email;
-    @NotBlank
     @Size(min = 3)
     private String passwordDigest;
     @CreatedDate
