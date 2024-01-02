@@ -8,6 +8,7 @@ import hexlet.code.app.mapper.UserMapper;
 import hexlet.code.app.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,11 +19,14 @@ public class UserService {
     UserRepository userRepository;
     @Autowired
     UserMapper userMapper;
-    public List<UserDTO> getAll() {
+    public ResponseEntity<List<UserDTO>> getAll() {
         var users = userRepository.findAll();
-        return users.stream()
+        var result = users.stream()
                 .map(userMapper::map)
                 .toList();
+        return ResponseEntity.ok()
+                .header("X-Total-Count", String.valueOf(users.size()))
+                .body(result);
     }
     public UserDTO create(@Valid UserCreateDTO dto) {
         var user = userMapper.map(dto);
