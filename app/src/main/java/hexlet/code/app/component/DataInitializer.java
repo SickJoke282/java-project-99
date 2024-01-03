@@ -1,5 +1,7 @@
 package hexlet.code.app.component;
 
+import hexlet.code.app.model.TaskStatus;
+import hexlet.code.app.repository.TaskStatusRepository;
 import hexlet.code.app.service.CustomUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,8 @@ public class DataInitializer implements ApplicationRunner {
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    private TaskStatusRepository taskStatusRepository;
+    @Autowired
     private CustomUserDetailsService userService;
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -33,6 +37,33 @@ public class DataInitializer implements ApplicationRunner {
             log.info("User has been found");
         } else {
             log.info("User has not been found");
+        }
+        for (int i = 0; i < 5; i++) {
+            var taskStatus = new TaskStatus();
+            taskStatus.setAuthor(user);
+            switch (i) {
+                case 0:
+                    taskStatus.setName("Draft");
+                    taskStatus.setSlug("draft");
+                    break;
+                case 1:
+                    taskStatus.setName("ToReview");
+                    taskStatus.setSlug("to_review");
+                    break;
+                case 2:
+                    taskStatus.setName("ToBeFixed");
+                    taskStatus.setSlug("to_be_fixed");
+                    break;
+                case 3:
+                    taskStatus.setName("ToPublish");
+                    taskStatus.setSlug("to_publish");
+                    break;
+                case 4:
+                    taskStatus.setName("Published");
+                    taskStatus.setSlug("published");
+                    break;
+            }
+            taskStatusRepository.save(taskStatus);
         }
     }
 }
