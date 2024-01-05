@@ -9,6 +9,7 @@ import hexlet.code.app.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,6 +47,11 @@ public class UserService {
         return userMapper.map(user);
     }
     public void delete(Long id) {
+        var user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
+        if (user.getTasks() != null) {
+            throw new AccessDeniedException("User has at least one task");
+        }
         userRepository.deleteById(id);
     }
 }
