@@ -41,9 +41,9 @@ public class User implements BaseEntity, UserDetails {
     private long id;
     private String firstName;
     private String lastName;
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "assignee", cascade = CascadeType.MERGE, orphanRemoval = true)
     @JsonIgnore
-    private List<TaskStatus> taskStatuses = new ArrayList<>();
+    private List<Task> tasks = new ArrayList<>();
     @Column(unique = true)
     @Email
     @NotBlank
