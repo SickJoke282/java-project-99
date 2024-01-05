@@ -29,14 +29,7 @@ import java.util.List;
 @RequestMapping("/api/task_statuses")
 public class TaskStatusesController {
     @Autowired
-    private TaskStatusRepository taskStatusRepository;
-
-    @Autowired
-    private TaskStatusMapper taskStatusMapper;
-
-    @Autowired
     private UserUtils userUtils;
-
     @Autowired
     private TaskStatusService taskStatusService;
 
@@ -51,36 +44,28 @@ public class TaskStatusesController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("@userUtils.isAuthenticated()")
     TaskStatusDTO create(@Valid @RequestBody TaskStatusCreateDTO dto) {
-        var taskStatus = taskStatusMapper.map(dto);
-        taskStatus.setAuthor(userUtils.getCurrentUser());
-        taskStatusRepository.save(taskStatus);
-        return taskStatusMapper.map(taskStatus);
+        return taskStatusService.create(dto);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     TaskStatusDTO show(@PathVariable Long id) {
-        var taskStatus = taskStatusRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Not Found: " + id));
-        return taskStatusMapper.map(taskStatus);
+        return taskStatusService.findById(id);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("@userUtils.isAuthor(#id)")
+    @PreAuthorize("@userUtils.isAuthenticated()")
     TaskStatusDTO update(@RequestBody @Valid TaskStatusUpdateDTO dto, @PathVariable Long id) {
-        var taskStatus = taskStatusRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Not Found"));
-        taskStatusMapper.update(dto, taskStatus);
-        taskStatusRepository.save(taskStatus);
-        return taskStatusMapper.map(taskStatus);
+        return taskStatusService.update(dto, id);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("@userUtils.isAuthor(#id)")
+    @PreAuthorize("@userUtils.isAuthenticated()")
     void destroy(@PathVariable Long id) {
-        taskStatusRepository.deleteById(id);
+        taskStatusService.delete(id);
     }
 }
