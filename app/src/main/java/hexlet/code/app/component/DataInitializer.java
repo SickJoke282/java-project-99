@@ -40,7 +40,6 @@ public class DataInitializer implements ApplicationRunner {
         }
         for (int i = 0; i < 5; i++) {
             var taskStatus = new TaskStatus();
-            taskStatus.setAuthor(user);
             switch (i) {
                 case 0:
                     taskStatus.setName("Draft");
@@ -61,6 +60,8 @@ public class DataInitializer implements ApplicationRunner {
                 case 4:
                     taskStatus.setName("Published");
                     taskStatus.setSlug("published");
+                    break;
+                default:
                     break;
             }
             taskStatusRepository.save(taskStatus);
