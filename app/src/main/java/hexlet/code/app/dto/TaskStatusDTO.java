@@ -9,7 +9,6 @@ import java.time.LocalDate;
 @Setter
 public class TaskStatusDTO {
     private long id;
-    private long authorId;
     private String name;
     private String slug;
     private LocalDate createdAt;
