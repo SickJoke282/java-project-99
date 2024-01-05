@@ -9,9 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TaskStatusCreateDTO {
-    @NotNull
-    private long authorId;
-    @NotBlank
     @Size(min = 1)
     private String name;
     @NotBlank
