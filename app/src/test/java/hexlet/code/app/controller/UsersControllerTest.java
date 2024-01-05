@@ -1,11 +1,14 @@
 package hexlet.code.app.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hexlet.code.app.model.TaskStatus;
 import hexlet.code.app.model.User;
 import hexlet.code.app.repository.UserRepository;
 import hexlet.code.app.util.ModelGenerator;
+import jakarta.persistence.EntityManager;
 import net.datafaker.Faker;
 import org.instancio.Instancio;
+import org.instancio.Select;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,6 +42,8 @@ public class UsersControllerTest {
     private ModelGenerator modelGenerator;
     @Autowired
     private ObjectMapper om;
+    @Autowired
+    private EntityManager entityManager;
 
     private SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor token;
 
@@ -52,13 +58,13 @@ public class UsersControllerTest {
     }
 
     @Test
-    public void testIndex() throws Exception {
+    public void testUserIndex() throws Exception {
         mockMvc.perform(get("/api/users").with(jwt()))
                 .andExpect(status().isOk());
     }
 
     @Test
-    void testCreate() throws Exception {
+    void testUserCreate() throws Exception {
         var data = Instancio.of(modelGenerator.getUserModel())
                 .create();
 
@@ -77,14 +83,13 @@ public class UsersControllerTest {
     }
 
     @Test
-    public void testUpdate() throws Exception {
-
+    public void testUserUpdate() throws Exception {
         var data = new HashMap<>();
         data.put("email", "something@hello.com");
         data.put("passwordDigest", "12345123");
 
         var request = put("/api/users/" + testUser.getId())
-                .with(token)
+                .with(jwt().jwt(builder -> builder.subject(testUser.getEmail())))  // Authenticate as the testUser
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(data));
 
