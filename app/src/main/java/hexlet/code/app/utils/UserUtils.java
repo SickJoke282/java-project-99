@@ -2,7 +2,6 @@ package hexlet.code.app.utils;
 
 import hexlet.code.app.model.User;
 import hexlet.code.app.repository.TaskRepository;
-import hexlet.code.app.repository.TaskStatusRepository;
 import hexlet.code.app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;

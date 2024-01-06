@@ -29,7 +29,6 @@ import hexlet.code.app.model.Task;
 import hexlet.code.app.repository.TaskRepository;
 import hexlet.code.app.util.ModelGenerator;
 import hexlet.code.app.utils.UserUtils;
-import hexlet.code.app.dto.TaskUpdateDTO;
 
 @SpringBootTest
 @AutoConfigureMockMvc

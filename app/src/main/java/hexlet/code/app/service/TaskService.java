@@ -10,7 +10,6 @@ import hexlet.code.app.utils.UserUtils;
 import hexlet.code.app.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

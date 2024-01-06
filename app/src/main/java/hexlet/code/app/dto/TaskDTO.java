@@ -1,7 +1,6 @@
 package hexlet.code.app.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import hexlet.code.app.model.TaskStatus;
 import lombok.Getter;
 import lombok.Setter;
 

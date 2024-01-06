@@ -12,9 +12,6 @@ import org.springframework.stereotype.Component;
 import hexlet.code.app.model.User;
 import jakarta.annotation.PostConstruct;
 
-import java.util.Arrays;
-import java.util.List;
-
 @Getter
 @Component
 public class ModelGenerator {
