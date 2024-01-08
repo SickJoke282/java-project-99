@@ -1,5 +1,6 @@
 package hexlet.code.app.util;
 
+import hexlet.code.app.model.Label;
 import hexlet.code.app.model.Task;
 import hexlet.code.app.model.TaskStatus;
 import lombok.Getter;
@@ -18,6 +19,7 @@ public class ModelGenerator {
     private Model<User> userModel;
     private Model<Task> taskModel;
     private Model<TaskStatus> taskStatusModel;
+    private Model<Label> labelModel;
     @Autowired
     private Faker faker;
     @PostConstruct
@@ -28,6 +30,7 @@ public class ModelGenerator {
                 .supply(Select.field(Task::getDescription), () -> faker.gameOfThrones().quote())
                 .ignore(Select.field(Task::getTaskStatus))
                 .ignore(Select.field(Task::getAssignee))
+                .ignore(Select.field(Task::getLabels))
                 .ignore(Select.field(Task::getCreatedAt))
                 .toModel();
         userModel = Instancio.of(User.class)
@@ -44,6 +47,12 @@ public class ModelGenerator {
                 .supply(Select.field(TaskStatus::getName), () -> faker.gameOfThrones().house())
                 .supply(Select.field(TaskStatus::getSlug), () -> faker.gameOfThrones().city().toLowerCase())
                 .ignore(Select.field(TaskStatus::getCreatedAt))
+                .toModel();
+        labelModel = Instancio.of(Label.class)
+                .ignore(Select.field(Label::getId))
+                .supply(Select.field(Label::getName), () -> faker.gameOfThrones().house())
+                .ignore(Select.field(Label::getTasks))
+                .ignore(Select.field(Label::getCreatedAt))
                 .toModel();
     }
 }
