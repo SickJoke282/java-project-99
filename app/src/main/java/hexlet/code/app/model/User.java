@@ -17,6 +17,7 @@ import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -32,19 +33,24 @@ import java.util.List;
 @Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 @Getter
 @Setter
 public class User implements BaseEntity, UserDetails {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private long id;
+    @ToString.Include
     private String firstName;
+    @ToString.Include
     private String lastName;
     @OneToMany(mappedBy = "assignee", cascade = CascadeType.MERGE, orphanRemoval = true)
     @JsonIgnore
     private List<Task> tasks = new ArrayList<>();
     @Column(unique = true)
+    @ToString.Include
     @Email
     @NotBlank
     private String email;
