@@ -8,8 +8,6 @@ import hexlet.code.app.mapper.TaskMapper;
 import hexlet.code.app.repository.TaskRepository;
 import hexlet.code.app.utils.UserUtils;
 import hexlet.code.app.model.User;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,8 +22,6 @@ public class TaskService {
     TaskRepository taskRepository;
     @Autowired
     TaskMapper taskMapper;
-    @PersistenceContext
-    EntityManager entityManager;
     public List<TaskDTO> getAll() {
         var tasks = taskRepository.findAll();
         return tasks.stream()
@@ -35,9 +31,6 @@ public class TaskService {
     public TaskDTO create(@Valid TaskCreateDTO dto) {
         var task = taskMapper.map(dto);
         User currentUser = userUtils.getCurrentUser();
-        if (!entityManager.contains(currentUser)) {
-            currentUser = entityManager.merge(currentUser);
-        }
         task.setAssignee(currentUser);
         taskRepository.save(task);
         return taskMapper.map(task);
