@@ -1,6 +1,8 @@
 package hexlet.code.app.component;
 
+import hexlet.code.app.model.Label;
 import hexlet.code.app.model.TaskStatus;
+import hexlet.code.app.repository.LabelRepository;
 import hexlet.code.app.repository.TaskStatusRepository;
 import hexlet.code.app.service.CustomUserDetailsService;
 import org.slf4j.Logger;
@@ -19,6 +21,8 @@ import lombok.AllArgsConstructor;
 public class DataInitializer implements ApplicationRunner {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private LabelRepository labelRepository;
     @Autowired
     private TaskStatusRepository taskStatusRepository;
     @Autowired
@@ -65,6 +69,20 @@ public class DataInitializer implements ApplicationRunner {
                     break;
             }
             taskStatusRepository.save(taskStatus);
+        }
+        for (int i = 0; i < 2; i++) {
+            var label = new Label();
+            switch (i) {
+                case 0:
+                    label.setName("feature");
+                    break;
+                case 1:
+                    label.setName("bug");
+                    break;
+                default:
+                    break;
+            }
+            labelRepository.save(label);
         }
     }
 }
