@@ -19,8 +19,6 @@ RUN mkdir /project/code
 
 ENV GRADLE_USER_HOME /project/.gradle
 
-COPY app/. .
-
 RUN gradle installDist
 
 CMD build/install/app/bin/app
