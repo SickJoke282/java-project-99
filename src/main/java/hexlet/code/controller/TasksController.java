@@ -31,16 +31,16 @@ public class TasksController {
     @Autowired
     private TaskService taskService;
 
-    @GetMapping("")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    ResponseEntity<List<TaskDTO>> index(ParametrizedTaskDTO dto) {
+    ResponseEntity<List<TaskDTO>> getList(ParametrizedTaskDTO dto) {
         var tasks = taskService.getParameterizedAll(dto);
         return ResponseEntity.ok()
                 .header("X-Total-Count", String.valueOf(tasks.size()))
                 .body(tasks);
     }
 
-    @PostMapping("")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("@userUtils.isAuthenticated()")
     TaskDTO create(@Valid @RequestBody TaskCreateDTO dto) {
