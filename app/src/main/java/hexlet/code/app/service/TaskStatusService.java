@@ -7,9 +7,6 @@ import hexlet.code.app.exception.ResourceNotFoundException;
 import hexlet.code.app.mapper.TaskStatusMapper;
 import hexlet.code.app.repository.TaskRepository;
 import hexlet.code.app.repository.TaskStatusRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
@@ -25,15 +22,12 @@ public class TaskStatusService {
     TaskRepository taskRepository;
     @Autowired
     TaskStatusMapper taskStatusMapper;
-    @PersistenceContext
-    EntityManager entityManager;
     public List<TaskStatusDTO> getAll() {
         var taskStatuses = taskStatusRepository.findAll();
         return taskStatuses.stream()
                 .map(taskStatusMapper::map)
                 .toList();
     }
-    @Transactional
     public TaskStatusDTO create(@Valid TaskStatusCreateDTO dto) {
         var taskStatus = taskStatusMapper.map(dto);
         taskStatusRepository.save(taskStatus);

@@ -10,6 +10,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import hexlet.code.app.model.Label;
+import hexlet.code.app.model.TaskStatus;
+import hexlet.code.app.repository.LabelRepository;
+import hexlet.code.app.repository.TaskStatusRepository;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,6 +34,8 @@ import hexlet.code.app.repository.TaskRepository;
 import hexlet.code.app.util.ModelGenerator;
 import hexlet.code.app.utils.UserUtils;
 
+import java.util.Set;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 public class TasksControllerTest {
@@ -48,6 +54,10 @@ public class TasksControllerTest {
 
     @Autowired
     private TaskRepository taskRepository;
+    @Autowired
+    private TaskStatusRepository taskStatusRepository;
+    @Autowired
+    private LabelRepository labelRepository;
 
     @Autowired
     private UserUtils userUtils;
@@ -55,13 +65,23 @@ public class TasksControllerTest {
     private JwtRequestPostProcessor token;
 
     private Task testTask;
+    private TaskStatus testTaskStatus;
+    private Label testLabel;
 
     @BeforeEach
     public void setUp() {
         token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
         testTask = Instancio.of(modelGenerator.getTaskModel())
                 .create();
+        testTaskStatus = Instancio.of(modelGenerator.getTaskStatusModel())
+                        .create();
+        testLabel = Instancio.of(modelGenerator.getLabelModel())
+                        .create();
+        taskStatusRepository.save(testTaskStatus);
+        labelRepository.save(testLabel);
         testTask.setAssignee(userUtils.getTestUser());
+        testTask.setTaskStatus(testTaskStatus);
+        testTask.setLabels(Set.of(testLabel));
     }
 
     @Test
@@ -72,6 +92,21 @@ public class TasksControllerTest {
                 .andReturn();
         var body = result.getResponse().getContentAsString();
         assertThatJson(body).isArray();
+    }
+    @Test
+    public void testParametrizedTaskIndex() throws Exception {
+        taskRepository.save(testTask);
+        var request = get("/api/tasks?"
+                + "titleCont=" + "test"
+                + "&assigneeId=" + 2
+                + "&status=" + "test"
+                + "&labelId=" + 4)
+                .with(token);
+        var result = mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andReturn();
+        var body = result.getResponse().getContentAsString();
+        assertThatJson(body).isArray().hasSize(0);
     }
 
     @Test

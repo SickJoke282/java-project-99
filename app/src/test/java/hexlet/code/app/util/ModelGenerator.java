@@ -44,14 +44,13 @@ public class ModelGenerator {
                 .toModel();
         taskStatusModel = Instancio.of(TaskStatus.class)
                 .ignore(Select.field(TaskStatus::getId))
-                .supply(Select.field(TaskStatus::getName), () -> faker.gameOfThrones().house())
-                .supply(Select.field(TaskStatus::getSlug), () -> faker.gameOfThrones().city().toLowerCase())
+                .supply(Select.field(TaskStatus::getName), () -> faker.lorem().word())
+                .supply(Select.field(TaskStatus::getSlug), () -> faker.internet().slug())
                 .ignore(Select.field(TaskStatus::getCreatedAt))
                 .toModel();
         labelModel = Instancio.of(Label.class)
                 .ignore(Select.field(Label::getId))
                 .supply(Select.field(Label::getName), () -> faker.gameOfThrones().house())
-                .ignore(Select.field(Label::getTasks))
                 .ignore(Select.field(Label::getCreatedAt))
                 .toModel();
     }

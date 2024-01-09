@@ -11,6 +11,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.1.4"
 	id("com.github.ben-manes.versions") version "0.50.0"
 	id("com.github.johnrengelman.shadow") version "8.1.1"
+	id("io.sentry.jvm.gradle") version "4.1.1"
 }
 
 group = "hexlet.code"
@@ -38,6 +39,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
+	implementation("io.sentry:sentry-spring-boot-starter:7.1.0")
+	implementation("io.sentry:sentry-spring-boot-starter-jakarta:7.1.0")
 
 	implementation("org.openapitools:jackson-databind-nullable:0.2.6")
 	implementation("org.mapstruct:mapstruct:1.6.0.Beta1")
@@ -64,6 +67,16 @@ tasks.test {
 		events = mutableSetOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
 		showStandardStreams = true
 		finalizedBy(tasks.jacocoTestReport)
+	}
+}
+
+sentry {
+	val env = System.getenv("APP_ENV")
+	if (env != null && env.contentEquals("production")) {
+		includeSourceContext = true
+		org = "egorkrylatov"
+		projectName = "java-project-99"
+		authToken = System.getenv("SENTRY_AUTH_TOKEN")
 	}
 }
 

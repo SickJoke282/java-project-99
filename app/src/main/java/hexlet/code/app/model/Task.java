@@ -4,8 +4,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -55,10 +53,6 @@ public class Task {
     @NotNull
     private User assignee;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinTable(
-            name = "tasks_labels",
-            joinColumns = @JoinColumn(name = "task_id"),
-            inverseJoinColumns = @JoinColumn(name = "label_id"))
     private Set<Label> labels = new HashSet<>();
     @CreatedDate
     private LocalDate createdAt;

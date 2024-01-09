@@ -7,11 +7,7 @@ import hexlet.code.app.exception.ResourceNotFoundException;
 import hexlet.code.app.mapper.LabelMapper;
 import hexlet.code.app.repository.LabelRepository;
 import hexlet.code.app.repository.TaskRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,15 +20,13 @@ public class LabelService {
     TaskRepository taskRepository;
     @Autowired
     LabelMapper labelMapper;
-    @PersistenceContext
-    EntityManager entityManager;
     public List<LabelDTO> getAll() {
         var labels = labelRepository.findAll();
         return labels.stream()
                 .map(labelMapper::map)
                 .toList();
     }
-    public LabelDTO create(@Valid LabelCreateDTO dto) {
+    public LabelDTO create(LabelCreateDTO dto) {
         var label = labelMapper.map(dto);
         labelRepository.save(label);
         return labelMapper.map(label);
@@ -42,7 +36,7 @@ public class LabelService {
                 .orElseThrow(() -> new ResourceNotFoundException("Label with id " + id + " not found"));
         return labelMapper.map(label);
     }
-    public LabelDTO update(@Valid LabelUpdateDTO dto, Long id) {
+    public LabelDTO update(LabelUpdateDTO dto, Long id) {
         var label = labelRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Label with id " + id + " not found"));
         labelMapper.update(dto, label);
@@ -50,11 +44,11 @@ public class LabelService {
         return labelMapper.map(label);
     }
     public void delete(Long id) {
-        var label = labelRepository.findById(id)
+        /*var label = labelRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Label with id " + id + " not found"));
         if (!label.getTasks().isEmpty()) {
             throw new AccessDeniedException("Label is connected at least with 1 task");
-        }
+        }*/
         labelRepository.deleteById(id);
     }
 }
