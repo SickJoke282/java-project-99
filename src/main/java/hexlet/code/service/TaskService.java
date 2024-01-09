@@ -8,7 +8,6 @@ import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.TaskMapper;
 import hexlet.code.repository.TaskRepository;
 import hexlet.code.specification.TaskSpecification;
-import hexlet.code.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,23 +20,16 @@ public class TaskService {
     @Autowired
     TaskMapper taskMapper;
     @Autowired
-    UserUtils userUtils;
-    @Autowired
     TaskSpecification taskSpecification;
-    public List<TaskDTO> getAll() {
-        var tasks = taskRepository.findAll();
+    public List<TaskDTO> getParameterizedAll(ParametrizedTaskDTO dto) {
+        var spec = taskSpecification.build(dto);
+        var tasks = taskRepository.findAll(spec);
         return tasks.stream()
                 .map(taskMapper::map)
                 .toList();
     }
-    public List<TaskDTO> getParameterizedAll(ParametrizedTaskDTO dto) {
-        var spec = taskSpecification.build(dto);
-        return taskMapper.map(taskRepository.findAll(spec));
-    }
     public TaskDTO create(TaskCreateDTO dto) {
         var task = taskMapper.map(dto);
-        System.out.println(userUtils.getCurrentUser());
-        System.out.println(task.toString());
         taskRepository.save(task);
         return taskMapper.map(task);
     }
@@ -54,7 +46,6 @@ public class TaskService {
         return taskMapper.map(task);
     }
     public void delete(Long id) {
-        System.out.println(taskRepository.findAll().stream().map(Object::toString).toList());
         taskRepository.deleteById(id);
     }
 }

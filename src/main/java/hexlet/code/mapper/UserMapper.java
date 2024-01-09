@@ -25,13 +25,19 @@ public abstract class UserMapper {
     private PasswordEncoder passwordEncoder;
     @Mapping(target = "passwordDigest", source = "password")
     public abstract User map(UserCreateDTO dto);
-    public abstract User map(UserUpdateDTO dto);
-    @Mapping(target = "password", ignore = true)
     public abstract UserDTO map(User model);
+    @Mapping(target = "password", ignore = true)
     public abstract void update(UserUpdateDTO dto, @MappingTarget User model);
     @BeforeMapping
     public void encryptPassword(UserCreateDTO data) {
         var password = data.getPassword();
         data.setPassword(passwordEncoder.encode(password));
+    }
+    @BeforeMapping
+    public void encryptUpdatedPassword(UserUpdateDTO dto, @MappingTarget User model) {
+        var password = dto.getPassword();
+        if (password != null && password.isPresent()) {
+            model.setPasswordDigest(passwordEncoder.encode(password.get()));
+        }
     }
 }

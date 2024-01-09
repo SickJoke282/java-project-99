@@ -6,7 +6,6 @@ import hexlet.code.dto.LabelUpdateDTO;
 import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.LabelMapper;
 import hexlet.code.repository.LabelRepository;
-import hexlet.code.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +15,6 @@ import java.util.List;
 public class LabelService {
     @Autowired
     LabelRepository labelRepository;
-    @Autowired
-    TaskRepository taskRepository;
     @Autowired
     LabelMapper labelMapper;
     public List<LabelDTO> getAll() {
@@ -44,11 +41,6 @@ public class LabelService {
         return labelMapper.map(label);
     }
     public void delete(Long id) {
-        /*var label = labelRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Label with id " + id + " not found"));
-        if (!label.getTasks().isEmpty()) {
-            throw new AccessDeniedException("Label is connected at least with 1 task");
-        }*/
         labelRepository.deleteById(id);
     }
 }
