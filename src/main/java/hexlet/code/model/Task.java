@@ -1,5 +1,6 @@
 package hexlet.code.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.ManyToMany;
@@ -49,6 +50,7 @@ public class Task {
     @ManyToOne(fetch = FetchType.EAGER)
     private TaskStatus taskStatus;
     @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
     @ToString.Include
     private User assignee;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
