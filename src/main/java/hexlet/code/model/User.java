@@ -2,14 +2,12 @@ package hexlet.code.model;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Column;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -26,7 +24,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -45,9 +42,6 @@ public class User implements BaseEntity, UserDetails {
     private String firstName;
     @ToString.Include
     private String lastName;
-    @OneToMany(mappedBy = "assignee")
-    @JsonIgnore
-    private List<Task> tasks = new ArrayList<>();
     @Column(unique = true)
     @ToString.Include
     @Email

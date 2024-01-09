@@ -48,7 +48,7 @@ public class Task {
     @ToString.Include
     @ManyToOne(fetch = FetchType.EAGER)
     private TaskStatus taskStatus;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @ToString.Include
     private User assignee;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
