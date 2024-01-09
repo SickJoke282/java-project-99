@@ -50,9 +50,9 @@ public class Task {
     @ManyToOne(fetch = FetchType.EAGER)
     private TaskStatus taskStatus;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JsonIgnore
     @ToString.Include
     private User assignee;
+    @ToString.Include
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Set<Label> labels = new HashSet<>();
     @CreatedDate

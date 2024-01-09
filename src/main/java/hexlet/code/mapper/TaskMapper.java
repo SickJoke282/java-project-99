@@ -37,14 +37,14 @@ public abstract class TaskMapper {
     @Mapping(target = "description", source = "content")
     @Mapping(target = "taskStatus", source = "status", qualifiedByName = "slugToTaskStatus")
     @Mapping(target = "assignee", source = "assigneeId")
-    @Mapping(target = "labels", source = "labelIds", qualifiedByName = "labelIdsToLabels")
+    @Mapping(target = "labels", source = "taskLabelIds", qualifiedByName = "labelIdsToLabels")
     public abstract Task map(TaskCreateDTO dto);
 
     @Mapping(source = "name", target = "title")
     @Mapping(source = "description", target = "content")
     @Mapping(source = "assignee.id", target = "assigneeId")
     @Mapping(source = "taskStatus.slug", target = "status")
-    @Mapping(source = "labels", target = "labelIds", qualifiedByName = "labelsToLabelIds")
+    @Mapping(source = "labels", target = "taskLabelIds", qualifiedByName = "labelsToLabelIds")
     public abstract TaskDTO map(Task model);
 
     public abstract List<TaskDTO> map(List<Task> models);
@@ -53,7 +53,7 @@ public abstract class TaskMapper {
     @Mapping(target = "description", source = "content")
     @Mapping(target = "taskStatus", source = "status", qualifiedByName = "slugToTaskStatus")
     @Mapping(target = "assignee", source = "assigneeId")
-    @Mapping(target = "labels", source = "labelIds", qualifiedByName = "labelIdsToLabels")
+    @Mapping(target = "labels", source = "taskLabelIds", qualifiedByName = "labelIdsToLabels")
     public abstract void update(TaskUpdateDTO dto, @MappingTarget Task model);
     @Named("slugToTaskStatus")
     public TaskStatus slugToTaskStatus(String slug) {
