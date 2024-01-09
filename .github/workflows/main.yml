@@ -14,12 +14,10 @@ jobs:
         with:
           java-version: '20'
           distribution: 'temurin'
-      - name: Build with Gradle
+      - name: Setup the Gradle
         uses: gradle/gradle-build-action@v2
-        with:
-          arguments: build
-          build-root-directory: app
-          gradle-version: 8.3
+      - name: Build
+        run: make build
       - name: Code coverage
         uses: paambaati/codeclimate-action@v3.2.0
         env:
