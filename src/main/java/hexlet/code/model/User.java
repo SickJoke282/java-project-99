@@ -46,7 +46,7 @@ public class User implements BaseEntity, UserDetails {
     private String firstName;
     @ToString.Include
     private String lastName;
-    @OneToMany(mappedBy = "assignee", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(mappedBy = "assignee")
     @JsonIgnore
     private List<Task> tasks = new ArrayList<>();
     @Column(unique = true)
