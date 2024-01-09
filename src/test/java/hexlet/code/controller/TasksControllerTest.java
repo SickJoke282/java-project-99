@@ -142,26 +142,6 @@ public class TasksControllerTest {
         testTask = taskRepository.findById(testTask.getId()).get();
         assertThat(testTask.getName()).isEqualTo(data.getTitle().get());
     }
-
-    @Test
-    public void testTaskUpdateFailed() throws Exception {
-        taskRepository.save(testTask);
-
-        var data = new TaskUpdateDTO();
-        data.setTitle(JsonNullable.of("new name"));
-
-        var request = put("/api/tasks/" + testTask.getId())
-                .with(jwt())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(om.writeValueAsString(data));
-
-        mockMvc.perform(request)
-                .andExpect(status().isForbidden());
-
-        var actualTask = taskRepository.findById(testTask.getId()).get();
-        assertThat(actualTask.getName()).isEqualTo(testTask.getName());
-    }
-
     @Test
     public void testTaskShow() throws Exception {
         taskRepository.save(testTask);
@@ -183,15 +163,5 @@ public class TasksControllerTest {
         mockMvc.perform(request)
                 .andExpect(status().isNoContent());
         assertThat(taskRepository.existsById(testTask.getId())).isEqualTo(false);
-    }
-
-    @Test
-    public void testTaskDestroyFailed() throws Exception {
-        taskRepository.save(testTask);
-        var request = delete("/api/tasks/" + testTask.getId()).with(jwt());
-        mockMvc.perform(request)
-                .andExpect(status().isForbidden());
-
-        assertThat(taskRepository.existsById(testTask.getId())).isEqualTo(true);
     }
 }

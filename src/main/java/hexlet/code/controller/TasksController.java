@@ -55,14 +55,14 @@ public class TasksController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("@userUtils.isAssignee(#id)")
+    @PreAuthorize("@userUtils.isAuthenticated()")
     TaskDTO update(@RequestBody @Valid TaskUpdateDTO dto, @PathVariable Long id) {
         return taskService.update(dto, id);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("@userUtils.isAssignee(#id)")
+    @PreAuthorize("@userUtils.isAuthenticated()")
     void destroy(@PathVariable Long id) {
         taskService.delete(id);
     }
