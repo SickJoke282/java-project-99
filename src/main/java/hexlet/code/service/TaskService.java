@@ -37,7 +37,6 @@ public class TaskService {
     public TaskDTO create(TaskCreateDTO dto) {
         var task = taskMapper.map(dto);
         System.out.println(userUtils.getCurrentUser());
-        task.setAssignee(userUtils.getCurrentUser());
         System.out.println(task.toString());
         taskRepository.save(task);
         return taskMapper.map(task);

@@ -48,7 +48,7 @@ public class Task {
     @ToString.Include
     @ManyToOne(fetch = FetchType.EAGER)
     private TaskStatus taskStatus;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @ToString.Include
     private User assignee;
     @ToString.Include

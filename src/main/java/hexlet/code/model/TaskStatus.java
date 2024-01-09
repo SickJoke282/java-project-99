@@ -6,7 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -32,12 +31,10 @@ public class TaskStatus implements BaseEntity {
     @EqualsAndHashCode.Include
     @ToString.Include
     private long id;
-    @NotBlank
     @Size(min = 1)
     @ToString.Include
     private String name;
     @Column(unique = true)
-    @NotBlank
     @Size(min = 1)
     @ToString.Include
     private String slug;
