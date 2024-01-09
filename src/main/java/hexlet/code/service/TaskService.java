@@ -8,6 +8,7 @@ import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.TaskMapper;
 import hexlet.code.repository.TaskRepository;
 import hexlet.code.specification.TaskSpecification;
+import hexlet.code.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,8 @@ public class TaskService {
     TaskRepository taskRepository;
     @Autowired
     TaskMapper taskMapper;
+    @Autowired
+    UserUtils userUtils;
     @Autowired
     TaskSpecification taskSpecification;
     public List<TaskDTO> getAll() {
@@ -33,6 +36,7 @@ public class TaskService {
     }
     public TaskDTO create(TaskCreateDTO dto) {
         var task = taskMapper.map(dto);
+        task.setAssignee(userUtils.getCurrentUser());
         taskRepository.save(task);
         return taskMapper.map(task);
     }

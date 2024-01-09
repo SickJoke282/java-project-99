@@ -32,7 +32,6 @@ public class TaskStatus implements BaseEntity {
     @EqualsAndHashCode.Include
     @ToString.Include
     private long id;
-    @Column(unique = true)
     @NotBlank
     @Size(min = 1)
     @ToString.Include
