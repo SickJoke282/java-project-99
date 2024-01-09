@@ -11,7 +11,7 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -36,7 +36,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ToString.Include
     private long id;
-    @NotNull
+    @NotBlank
     @Size(min = 1)
     @ToString.Include
     private String name;
@@ -50,7 +50,6 @@ public class Task {
     private TaskStatus taskStatus;
     @ManyToOne(fetch = FetchType.EAGER)
     @ToString.Include
-    @NotNull
     private User assignee;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Set<Label> labels = new HashSet<>();
