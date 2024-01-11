@@ -2,15 +2,12 @@ package hexlet.code.service;
 
 import hexlet.code.dto.TaskStatusCreateDTO;
 import hexlet.code.dto.TaskStatusDTO;
-import hexlet.code.dto.TaskStatusUpdateDTO;
-import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.TaskStatusMapper;
 import hexlet.code.model.TaskStatus;
 import hexlet.code.repository.TaskRepository;
 import hexlet.code.repository.TaskStatusRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

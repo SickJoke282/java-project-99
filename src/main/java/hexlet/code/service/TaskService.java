@@ -3,8 +3,6 @@ package hexlet.code.service;
 import hexlet.code.dto.ParametrizedTaskDTO;
 import hexlet.code.dto.TaskCreateDTO;
 import hexlet.code.dto.TaskDTO;
-import hexlet.code.dto.TaskUpdateDTO;
-import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.TaskMapper;
 import hexlet.code.model.Task;
 import hexlet.code.repository.TaskRepository;
