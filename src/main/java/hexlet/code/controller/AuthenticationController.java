@@ -28,15 +28,9 @@ public class AuthenticationController {
     @PostMapping("/login")
     public String login(@RequestBody @Valid AuthRequest request) {
         try {
-            Authentication authenticate = authenticationManager
-                    .authenticate(
-                            new UsernamePasswordAuthenticationToken(
-                                    request.getUsername(), request.getPassword()
-                            )
-                    );
-            User user = (User) authenticate.getPrincipal();
-            String encodedPassword = user.getPassword();
-            log.info("User '{}' successfully authenticated.", request.getUsername());
+            var authentication = new UsernamePasswordAuthenticationToken(
+                    request.getUsername(), request.getPassword());
+            authenticationManager.authenticate(authentication);
             return jwtUtils.generateToken(request.getUsername());
         } catch (BadCredentialsException ex) {
             log.error("Authentication failed: Bad credentials", ex);

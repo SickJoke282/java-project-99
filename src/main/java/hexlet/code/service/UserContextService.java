@@ -1,4 +1,4 @@
-package hexlet.code.utils;
+package hexlet.code.service;
 
 import hexlet.code.model.User;
 import hexlet.code.repository.TaskRepository;
@@ -8,7 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserUtils {
+public class UserContextService {
     @Autowired
     private UserRepository userRepository;
     @Autowired

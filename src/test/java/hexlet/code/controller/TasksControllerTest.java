@@ -18,7 +18,7 @@ import hexlet.code.dto.TaskUpdateDTO;
 import hexlet.code.mapper.TaskMapper;
 import hexlet.code.model.Task;
 import hexlet.code.repository.TaskRepository;
-import hexlet.code.utils.UserUtils;
+import hexlet.code.service.UserContextService;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -60,7 +60,7 @@ public class TasksControllerTest {
     private LabelRepository labelRepository;
 
     @Autowired
-    private UserUtils userUtils;
+    private UserContextService userContextService;
 
     private JwtRequestPostProcessor token;
 
@@ -79,7 +79,7 @@ public class TasksControllerTest {
                         .create();
         taskStatusRepository.save(testTaskStatus);
         labelRepository.save(testLabel);
-        testTask.setAssignee(userUtils.getTestUser());
+        testTask.setAssignee(userContextService.getTestUser());
         testTask.setTaskStatus(testTaskStatus);
         testTask.setLabels(Set.of(testLabel));
     }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/welcome")
 public class WelcomeController {
+    public static String headerName = "X-Total-Count";
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     String welcome() {

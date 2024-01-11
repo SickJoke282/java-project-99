@@ -30,9 +30,9 @@ import java.util.stream.Collectors;
 )
 public abstract class TaskMapper {
     @Autowired
-    TaskStatusRepository taskStatusRepository;
+    private TaskStatusRepository taskStatusRepository;
     @Autowired
-    LabelRepository labelRepository;
+    private LabelRepository labelRepository;
     @Mapping(target = "name", source = "title")
     @Mapping(target = "description", source = "content")
     @Mapping(target = "taskStatus", source = "status", qualifiedByName = "slugToTaskStatus")

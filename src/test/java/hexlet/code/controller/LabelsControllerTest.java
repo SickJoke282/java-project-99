@@ -14,7 +14,7 @@ import hexlet.code.dto.LabelUpdateDTO;
 import hexlet.code.mapper.LabelMapper;
 import hexlet.code.model.Label;
 import hexlet.code.repository.LabelRepository;
-import hexlet.code.utils.UserUtils;
+import hexlet.code.service.UserContextService;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,7 +51,7 @@ public class LabelsControllerTest {
     private LabelRepository labelRepository;
 
     @Autowired
-    private UserUtils userUtils;
+    private UserContextService userContextService;
 
     private JwtRequestPostProcessor token;
 

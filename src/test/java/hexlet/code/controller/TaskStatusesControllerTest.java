@@ -14,7 +14,7 @@ import hexlet.code.dto.TaskStatusUpdateDTO;
 import hexlet.code.mapper.TaskStatusMapper;
 import hexlet.code.model.TaskStatus;
 import hexlet.code.repository.TaskStatusRepository;
-import hexlet.code.utils.UserUtils;
+import hexlet.code.service.UserContextService;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,7 +50,7 @@ public class TaskStatusesControllerTest {
     private TaskStatusRepository taskStatusRepository;
 
     @Autowired
-    private UserUtils userUtils;
+    private UserContextService userContextService;
 
     private JwtRequestPostProcessor token;
 

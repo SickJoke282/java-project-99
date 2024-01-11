@@ -6,21 +6,23 @@ import hexlet.code.dto.TaskDTO;
 import hexlet.code.dto.TaskUpdateDTO;
 import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.TaskMapper;
+import hexlet.code.model.Task;
 import hexlet.code.repository.TaskRepository;
 import hexlet.code.specification.TaskSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskService {
     @Autowired
-    TaskRepository taskRepository;
+    private TaskRepository taskRepository;
     @Autowired
-    TaskMapper taskMapper;
+    private TaskMapper taskMapper;
     @Autowired
-    TaskSpecification taskSpecification;
+    private TaskSpecification taskSpecification;
     public List<TaskDTO> getParameterizedAll(ParametrizedTaskDTO dto) {
         var spec = taskSpecification.build(dto);
         var tasks = taskRepository.findAll(spec);
@@ -33,17 +35,8 @@ public class TaskService {
         taskRepository.save(task);
         return taskMapper.map(task);
     }
-    public TaskDTO findById(Long id) {
-        var task = taskRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Task with id " + id + " not found"));
-        return taskMapper.map(task);
-    }
-    public TaskDTO update(TaskUpdateDTO dto, Long id) {
-        var task = taskRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Task with id " + id + " not found"));
-        taskMapper.update(dto, task);
-        taskRepository.save(task);
-        return taskMapper.map(task);
+    public Optional<Task> findById(Long id) {
+        return taskRepository.findById(id);
     }
     public void delete(Long id) {
         taskRepository.deleteById(id);
