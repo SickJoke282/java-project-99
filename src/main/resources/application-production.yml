@@ -1,3 +1,3 @@
 spring:
   datasource:
-    url: jdbc:postgresql://dpg-ckmk798710pc73d2mb60-a.frankfurt-postgres.render.com:5432/postgresql_database_dxq8?user=postgresql_database_dxq8_user&password=mjs2SLg9wqKE5r5jXI8yiYHmwl9UPYvt
+    url: jdbc:postgresql://ddpg-cmilnd6n7f5s73a4uaqg-a.frankfurt-postgres.render.com:5432/postgresql_database_5wo2?user=postgresql_database_5w02_user&password=ons7nbaZVnwaKD4SzA5Vk4fgZqeYT1nM
