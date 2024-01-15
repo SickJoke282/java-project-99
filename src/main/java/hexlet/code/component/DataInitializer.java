@@ -30,18 +30,18 @@ public class DataInitializer implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         final Logger log = LoggerFactory.getLogger(CustomUserDetailsService.class);
-        userRepository.deleteAll();
-
-        var email = "hexlet@example.com";
-        var userData = new User();
-        userData.setEmail(email);
-        userData.setPasswordDigest("qwerty");
-        userService.createUser(userData);
-        var user = userRepository.findByEmail(email).orElse(null);
-        if (user != null) {
-            log.info("User has been found");
-        } else {
-            log.info("User has not been found");
+        if (userRepository.findAll().isEmpty()) {
+            var email = "hexlet@example.com";
+            var userData = new User();
+            userData.setEmail(email);
+            userData.setPasswordDigest("qwerty");
+            userService.createUser(userData);
+            var user = userRepository.findByEmail(email).orElse(null);
+            if (user != null) {
+                log.info("User has been found");
+            } else {
+                log.info("User has not been found");
+            }
         }
         if(taskStatusRepository.findAll().isEmpty()) {
             for (int i = 0; i < 5; i++) {
