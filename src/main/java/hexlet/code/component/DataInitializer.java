@@ -43,7 +43,7 @@ public class DataInitializer implements ApplicationRunner {
                 log.info("User has not been found");
             }
         }
-        if(taskStatusRepository.findAll().isEmpty()) {
+        if (taskStatusRepository.findAll().isEmpty()) {
             for (int i = 0; i < 5; i++) {
                 var taskStatus = new TaskStatus();
                 switch (i) {
