@@ -3,6 +3,7 @@ package hexlet.code.component;
 import hexlet.code.model.Label;
 import hexlet.code.model.TaskStatus;
 import hexlet.code.repository.LabelRepository;
+import hexlet.code.repository.TaskRepository;
 import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.service.CustomUserDetailsService;
 import hexlet.code.model.User;
@@ -24,12 +25,18 @@ public class DataInitializer implements ApplicationRunner {
     @Autowired
     private LabelRepository labelRepository;
     @Autowired
+    private TaskRepository taskRepository;
+    @Autowired
     private TaskStatusRepository taskStatusRepository;
     @Autowired
     private CustomUserDetailsService userService;
     @Override
     public void run(ApplicationArguments args) throws Exception {
         final Logger log = LoggerFactory.getLogger(CustomUserDetailsService.class);
+        taskRepository.deleteAll();
+        taskStatusRepository.deleteAll();
+        labelRepository.deleteAll();
+        userRepository.deleteAll();
         if (userRepository.findAll().isEmpty()) {
             var email = "hexlet@example.com";
             var userData = new User();
