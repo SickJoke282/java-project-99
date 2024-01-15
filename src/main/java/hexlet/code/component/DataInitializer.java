@@ -31,6 +31,7 @@ public class DataInitializer implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         final Logger log = LoggerFactory.getLogger(CustomUserDetailsService.class);
         userRepository.deleteAll();
+
         var email = "hexlet@example.com";
         var userData = new User();
         userData.setEmail(email);
@@ -42,47 +43,51 @@ public class DataInitializer implements ApplicationRunner {
         } else {
             log.info("User has not been found");
         }
-        for (int i = 0; i < 5; i++) {
-            var taskStatus = new TaskStatus();
-            switch (i) {
-                case 0:
-                    taskStatus.setName("Draft");
-                    taskStatus.setSlug("draft");
-                    break;
-                case 1:
-                    taskStatus.setName("ToReview");
-                    taskStatus.setSlug("to_review");
-                    break;
-                case 2:
-                    taskStatus.setName("ToBeFixed");
-                    taskStatus.setSlug("to_be_fixed");
-                    break;
-                case 3:
-                    taskStatus.setName("ToPublish");
-                    taskStatus.setSlug("to_publish");
-                    break;
-                case 4:
-                    taskStatus.setName("Published");
-                    taskStatus.setSlug("published");
-                    break;
-                default:
-                    break;
+        if(taskStatusRepository.findAll().isEmpty()) {
+            for (int i = 0; i < 5; i++) {
+                var taskStatus = new TaskStatus();
+                switch (i) {
+                    case 0:
+                        taskStatus.setName("Draft");
+                        taskStatus.setSlug("draft");
+                        break;
+                    case 1:
+                        taskStatus.setName("ToReview");
+                        taskStatus.setSlug("to_review");
+                        break;
+                    case 2:
+                        taskStatus.setName("ToBeFixed");
+                        taskStatus.setSlug("to_be_fixed");
+                        break;
+                    case 3:
+                        taskStatus.setName("ToPublish");
+                        taskStatus.setSlug("to_publish");
+                        break;
+                    case 4:
+                        taskStatus.setName("Published");
+                        taskStatus.setSlug("published");
+                        break;
+                    default:
+                        break;
+                }
+                taskStatusRepository.save(taskStatus);
             }
-            taskStatusRepository.save(taskStatus);
         }
-        for (int i = 0; i < 2; i++) {
-            var label = new Label();
-            switch (i) {
-                case 0:
-                    label.setName("feature");
-                    break;
-                case 1:
-                    label.setName("bug");
-                    break;
-                default:
-                    break;
+        if (labelRepository.findAll().isEmpty()) {
+            for (int i = 0; i < 2; i++) {
+                var label = new Label();
+                switch (i) {
+                    case 0:
+                        label.setName("feature");
+                        break;
+                    case 1:
+                        label.setName("bug");
+                        break;
+                    default:
+                        break;
+                }
+                labelRepository.save(label);
             }
-            labelRepository.save(label);
         }
     }
 }
