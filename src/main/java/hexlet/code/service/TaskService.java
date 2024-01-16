@@ -24,9 +24,7 @@ public class TaskService {
     public List<TaskDTO> getParameterizedAll(ParametrizedTaskDTO dto) {
         var spec = taskSpecification.build(dto);
         var tasks = taskRepository.findAll(spec);
-        return tasks.stream()
-                .map(taskMapper::map)
-                .toList();
+        return taskMapper.map(tasks);
     }
     public TaskDTO create(TaskCreateDTO dto) {
         var task = taskMapper.map(dto);
