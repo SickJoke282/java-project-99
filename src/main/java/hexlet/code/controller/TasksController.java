@@ -9,7 +9,6 @@ import hexlet.code.mapper.TaskMapper;
 import hexlet.code.repository.TaskRepository;
 import hexlet.code.service.TaskService;
 import hexlet.code.service.UserContextService;
-import hexlet.code.specification.TaskSpecification;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,8 +39,6 @@ public class TasksController {
     private TaskMapper taskMapper;
     @Autowired
     private TaskRepository taskRepository;
-    @Autowired
-    private TaskSpecification specBuilder;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
